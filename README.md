@@ -73,7 +73,7 @@ npm install
 ### 3. Run the server
 
 ```bash
-node server/app.js
+npm start
 ```
 
 Server will start on:
