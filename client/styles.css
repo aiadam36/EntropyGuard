@@ -5,13 +5,31 @@ body {
   text-align: center;
 }
 
+.input-group {
+  display: flex;
+}
+
 input {
-  width: 100%;
+  flex: 1;
   padding: 10px;
   font-size: 16px;
 }
 
-#result {
-  margin-top: 20px;
-  text-align: left;
+button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.strength-bar {
+  height: 10px;
+  background: #eee;
+  margin-top: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#bar {
+  height: 100%;
+  width: 0%;
+  transition: 0.3s;
 }
