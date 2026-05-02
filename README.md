@@ -9,6 +9,9 @@ This tool evaluates password strength using entropy calculations and basic heuri
 * 🔢 Entropy-based strength calculation
 * ⚡ Real-time password analysis
 * 🧠 Strength classification (Very Weak → Very Strong)
+* ⏱️ Time-to-crack estimation (offline GPU vs online attack models)
+* 🎨 Visual strength meter (real-time UI feedback)
+* 👁️ Password visibility toggle
 * 🔍 Character set detection (lowercase, uppercase, numbers, symbols)
 * 🚫 No password storage or logging
 * 🧾 Clean and readable codebase for easy auditing
@@ -41,6 +44,19 @@ A password using:
 
 Higher entropy = harder to crack.
 
+### Time-to-crack estimation
+
+The system estimates how long it would take to brute-force a password using:
+
+* Offline attack (high-speed GPU cracking simulation)
+* Online attack (rate-limited login attempts)
+
+This is based on:
+
+```
+guesses = 2^entropy
+```
+
 ---
 
 ## 📊 Strength Levels
@@ -52,6 +68,8 @@ Higher entropy = harder to crack.
 | 36 – 59        | Reasonable  |
 | 60 – 127       | Strong      |
 | ≥ 128          | Very Strong |
+
+> Strength is now visualized in the UI using a dynamic strength bar for faster feedback.
 
 ---
 
