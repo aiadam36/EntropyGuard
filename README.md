@@ -1,5 +1,7 @@
 # Entropy Guard 🔐
 
+A simple, transparent password strength checker built with Node.js
+
 This tool evaluates password strength using entropy calculations and basic heuristics — with a strong focus on **privacy, clarity, and auditability**.
 
 ---
