@@ -1,7 +1,6 @@
 {
   "name": "EntropyGuard",
-  "version": "1.0.0",
-  "description": "A simple, transparent password strength checker built with Node.js",
+  "version": "1.0.1",
   "main": "server/app.js",
   "scripts": {
     "start": "node server/app.js",
