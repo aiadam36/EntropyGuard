@@ -104,5 +104,4 @@ Contributions are welcome.
 If you'd like to improve this project:
 
 - Fork the repo
-- Create a feature branch
 - Submit a pull request

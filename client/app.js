@@ -3,12 +3,12 @@ const result = document.getElementById("result");
 const bar = document.getElementById("bar");
 const toggle = document.getElementById("toggle");
 
-// 👁️ toggle visibility
+// toggle visibility
 toggle.addEventListener("click", () => {
   input.type = input.type === "password" ? "text" : "password";
 });
 
-// 🎯 strength → color + width
+// strength (color + width)
 function updateBar(strength) {
   const map = {
     "Very Weak": { width: "20%", color: "red" },
