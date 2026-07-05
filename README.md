@@ -1,4 +1,4 @@
-# Entropy Guard 🔐
+# Entropy Guard
 
 A simple, transparent password strength checker built with Node.js
 
@@ -6,21 +6,21 @@ This tool evaluates password strength using entropy calculations and basic heuri
 
 ---
 
-## ✨ Features
+## Features
 
-* 🔢 Entropy-based strength calculation
-* ⚡ Real-time password analysis
-* 🧠 Strength classification (Very Weak → Very Strong)
-* ⏱️ Time-to-crack estimation (offline GPU vs online attack models)
-* 🎨 Visual strength meter (real-time UI feedback)
-* 👁️ Password visibility toggle
-* 🔍 Character set detection (lowercase, uppercase, numbers, symbols)
-* 🚫 No password storage or logging
-* 🧾 Clean and readable codebase for easy auditing
+* Entropy-based strength calculation
+* Real-time password analysis
+* Strength classification (Very Weak → Very Strong)
+* Time-to-crack estimation (offline GPU vs online attack models)
+* Visual strength meter (real-time UI feedback)
+* Password visibility toggle
+* Character set detection (lowercase, uppercase, numbers, symbols)
+* No password storage or logging
+* Clean and readable codebase for easy auditing
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 Password strength is estimated using entropy:
 
@@ -61,7 +61,7 @@ guesses = 2^entropy
 
 ---
 
-## 📊 Strength Levels
+## Strength Levels
 
 | Entropy (bits) | Strength    |
 | -------------- | ----------- |
@@ -75,7 +75,7 @@ guesses = 2^entropy
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the repository
 
@@ -104,7 +104,7 @@ http://localhost:3000
 
 ---
 
-## 🌐 Usage
+## Usage
 
 1. Open the client UI
 2. Enter a password
@@ -112,7 +112,7 @@ http://localhost:3000
 
 ---
 
-## 🔒 Privacy First
+## Privacy First
 
 * Passwords are **never stored**
 * No database involved
@@ -123,7 +123,7 @@ http://localhost:3000
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 Entropy alone does not guarantee security.
 
@@ -137,7 +137,7 @@ Use it as a guideline, not a guarantee.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome.
 
