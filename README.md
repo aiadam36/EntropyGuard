@@ -2,19 +2,19 @@
 
 A simple, transparent password strength checker built with Node.js
 
-This tool evaluates password strength using entropy calculations and basic heuristics — with a strong focus on **privacy, clarity, and auditability**.
+This tool evaluates password strength using **[zxcvbn](https://github.com/dropbox/zxcvbn)** — a pattern-aware strength estimator — with a strong focus on **privacy, clarity, and auditability**.
 
 ---
 
 ## Features
 
-* Entropy-based strength calculation
+* Pattern-aware strength analysis via zxcvbn
 * Real-time password analysis
 * Strength classification (Very Weak → Very Strong)
 * Time-to-crack estimation (offline GPU vs online attack models)
+* Contextual feedback and suggestions
 * Visual strength meter (real-time UI feedback)
 * Password visibility toggle
-* Character set detection (lowercase, uppercase, numbers, symbols)
 * No password storage or logging
 * Clean and readable codebase for easy auditing
 
@@ -22,56 +22,35 @@ This tool evaluates password strength using entropy calculations and basic heuri
 
 ## How It Works
 
-Password strength is estimated using entropy:
+Password strength is estimated using **zxcvbn**, which goes beyond simple character-set entropy by:
 
-```
-entropy = length × log2(charset_size)
-```
+* Matching against 30,000+ common passwords and dictionary words
+* Detecting keyboard patterns (e.g. `qwerty`, `12345`)
+* Recognising dates, names, repeated characters, and sequences
+* Accounting for common substitutions (e.g. `@` → `a`, `3` → `e`)
 
-Where:
-
-* `length` = number of characters in the password
-* `charset_size` = pool of possible characters used
-
-### Example
-
-A password using:
-
-* lowercase (26)
-* uppercase (26)
-* numbers (10)
-* symbols (~32)
-
-→ total charset ≈ 94
-
-Higher entropy = harder to crack.
+This produces a **score from 0–4** and a **log₁₀ guesses** estimate that reflects real-world crackability — not just theoretical character-set size.
 
 ### Time-to-crack estimation
 
-The system estimates how long it would take to brute-force a password using:
+Crack time is derived directly from zxcvbn's guesses estimate, modelled against two attacker profiles:
 
-* Offline attack (high-speed GPU cracking simulation)
-* Online attack (rate-limited login attempts)
-
-This is based on:
-
-```
-guesses = 2^entropy
-```
+* **Offline fast** — high-speed GPU cracking (10 billion guesses/sec)
+* **Online slow** — rate-limited login attempts (100 guesses/hour)
 
 ---
 
 ## Strength Levels
 
-| Entropy (bits) | Strength    |
-| -------------- | ----------- |
-| < 28           | Very Weak   |
-| 28 – 35        | Weak        |
-| 36 – 59        | Reasonable  |
-| 60 – 127       | Strong      |
-| ≥ 128          | Very Strong |
+| Score | Strength    |
+| ----- | ----------- |
+| 0     | Very Weak   |
+| 1     | Weak        |
+| 2     | Reasonable  |
+| 3     | Strong      |
+| 4     | Very Strong |
 
-> Strength is now visualized in the UI using a dynamic strength bar for faster feedback.
+> Strength is visualised in the UI using a dynamic strength bar for faster feedback.
 
 ---
 
@@ -108,7 +87,7 @@ http://localhost:3000
 
 1. Open the client UI
 2. Enter a password
-3. View entropy and strength in real-time
+3. View strength, crack time, and suggestions in real-time
 
 ---
 
@@ -125,12 +104,9 @@ http://localhost:3000
 
 ## Disclaimer
 
-Entropy alone does not guarantee security.
-
 This tool does **not**:
 
-* Check against large breach databases
-* Detect all common password patterns
+* Check against live breach databases
 * Replace proper security practices
 
 Use it as a guideline, not a guarantee.
