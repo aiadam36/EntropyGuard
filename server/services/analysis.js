@@ -1,55 +1,33 @@
-const { calculateEntropy, classifyEntropy } = require("./entropy");
+const zxcvbn = require("zxcvbn");
 
-function estimateCrackTime(entropy) {
-  // guesses = 2^entropy
-  const guesses = Math.pow(2, entropy);
+function analyzePassword(password) {
+  const result = zxcvbn(password);
 
-  // assume attacker speed (guesses per second)
-  const OFFLINE_FAST = 1e10; // strong GPU attack
-  const ONLINE_SLOW = 100;   // rate-limited login
+  const strengthLabels = ["Very Weak", "Weak", "Reasonable", "Strong", "Very Strong"];
 
-  function formatTime(seconds) {
-    if (seconds < 1) return "Instant";
+  const crackTimeSecs = result.crack_times_seconds;
 
-    const units = [
-      { label: "years", value: 60 * 60 * 24 * 365 },
-      { label: "days", value: 60 * 60 * 24 },
-      { label: "hours", value: 60 * 60 },
-      { label: "minutes", value: 60 },
-      { label: "seconds", value: 1 }
-    ];
-
-    for (const u of units) {
-      const amt = Math.floor(seconds / u.value);
-      if (amt >= 1) return `${amt} ${u.label}`;
-    }
+  function formatSeconds(s) {
+    if (s < 1) return "Instant";
+    if (s < 60) return `${Math.floor(s)} seconds`;
+    if (s < 3600) return `${Math.floor(s / 60)} minutes`;
+    if (s < 86400) return `${Math.floor(s / 3600)} hours`;
+    if (s < 31536000) return `${Math.floor(s / 86400)} days`;
+    return `${Math.floor(s / 31536000)} years`;
   }
 
   return {
-    offline_fast: formatTime(guesses / OFFLINE_FAST),
-    online_slow: formatTime(guesses / ONLINE_SLOW)
-  };
-}
-
-function analyzePassword(password) {
-  const entropy = calculateEntropy(password);
-  const strength = classifyEntropy(entropy);
-
-  const feedback = [];
-
-  if (password.length < 8) feedback.push("Use at least 8 characters");
-  if (!/[A-Z]/.test(password)) feedback.push("Add uppercase letters");
-  if (!/[0-9]/.test(password)) feedback.push("Include numbers");
-  if (!/[^a-zA-Z0-9]/.test(password)) feedback.push("Add symbols");
-
-  const crackTime = estimateCrackTime(entropy);
-
-  return {
     length: password.length,
-    entropy: Number(entropy.toFixed(2)),
-    strength,
-    crackTime,
-    feedback
+    entropy: Number(result.guesses_log10.toFixed(2)), // log10 guesses ≈ practical entropy
+    strength: strengthLabels[result.score],
+    crackTime: {
+      offline_fast: formatSeconds(crackTimeSecs.offline_fast_hashing_1e10_per_second),
+      online_slow:  formatSeconds(crackTimeSecs.online_throttling_100_per_hour),
+    },
+    feedback: [
+      result.feedback.warning,
+      ...result.feedback.suggestions,
+    ].filter(Boolean),
   };
 }
 
