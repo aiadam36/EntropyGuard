@@ -27,6 +27,13 @@ Password strength is estimated using **zxcvbn**, which goes beyond simple charac
 
 This produces a **score from 0–4** and a **log₁₀ guesses** estimate that reflects real-world crackability — not just theoretical character-set size.
 
+### Entropy display
+
+Two values are shown in the UI:
+
+- **Entropy (bits)** — `guesses_log10 × log₂(10)`, the standard measure of password strength in bits
+- **log₁₀ guesses** — the raw zxcvbn output, useful for comparison with published benchmarks
+
 ### Time-to-crack estimation
 
 Crack time is derived directly from zxcvbn's guesses estimate, modelled against two attacker profiles:
@@ -87,6 +94,8 @@ http://localhost:3000
 - Password analysis runs in the browser using zxcvbn loaded from cdnjs
 
 > This project is designed to be fully inspectable and safe to use.
+
+> **Note for self-hosters:** All analysis runs in the browser. If you modify this to use a server-side API, enforce HTTPS — passwords must never transit the network in plaintext.
 
 ## Disclaimer
 
