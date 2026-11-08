@@ -1,14 +1,7 @@
 const express = require("express");
 const path = require("path");
 
-const checkRoute = require("./routes/check");
-
 const app = express();
-
-app.use(express.json());
-
-// API
-app.use("/api", checkRoute);
 
 // serve frontend
 app.use(express.static(path.join(__dirname, "../client")));

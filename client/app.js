@@ -24,7 +24,18 @@ function updateBar(strength) {
   bar.style.background = s.color;
 }
 
-input.addEventListener("input", async () => {
+const strengthLabels = ["Very Weak", "Weak", "Reasonable", "Strong", "Very Strong"];
+
+function formatSeconds(seconds) {
+  if (seconds < 1) return "Instant";
+  if (seconds < 60) return `${Math.floor(seconds)} seconds`;
+  if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes`;
+  if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours`;
+  if (seconds < 31536000) return `${Math.floor(seconds / 86400)} days`;
+  return `${Math.floor(seconds / 31536000)} years`;
+}
+
+input.addEventListener("input", () => {
   const password = input.value;
 
   if (!password) {
@@ -33,25 +44,19 @@ input.addEventListener("input", async () => {
     return;
   }
 
-  const res = await fetch("/api/check", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ password })
-  });
+  const analysis = zxcvbn(password);
+  const strength = strengthLabels[analysis.score];
+  const feedback = [analysis.feedback.warning, ...analysis.feedback.suggestions].filter(Boolean);
 
-  const data = await res.json();
-
-  updateBar(data.strength);
+  updateBar(strength);
 
   result.innerHTML = `
-    <p><strong>Entropy:</strong> ${data.entropy}</p>
-    <p><strong>Strength:</strong> ${data.strength}</p>
-    <p><strong>Crack Time (Fast GPU):</strong> ${data.crackTime.offline_fast}</p>
-    <p><strong>Crack Time (Online Attack):</strong> ${data.crackTime.online_slow}</p>
+    <p><strong>Entropy:</strong> ${analysis.guesses_log10.toFixed(2)}</p>
+    <p><strong>Strength:</strong> ${strength}</p>
+    <p><strong>Crack Time (Fast GPU):</strong> ${formatSeconds(analysis.crack_times_seconds.offline_fast_hashing_1e10_per_second)}</p>
+    <p><strong>Crack Time (Online Attack):</strong> ${formatSeconds(analysis.crack_times_seconds.online_throttling_100_per_hour)}</p>
     <ul>
-      ${data.feedback.map(f => `<li>${f}</li>`).join("")}
+      ${feedback.map(f => `<li>${f}</li>`).join("")}
     </ul>
   `;
 });

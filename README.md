@@ -83,8 +83,8 @@ http://localhost:3000
 
 - Passwords are **never stored**
 - No database involved
-- No external API calls
-- All calculations are done locally within the app
+- No password analysis API calls
+- Password analysis runs in the browser using zxcvbn loaded from cdnjs
 
 > This project is designed to be fully inspectable and safe to use.
 
