@@ -1,8 +1,8 @@
-# Entropy Guard
+# EntropyGuard
 
 A simple, transparent password strength checker built with Node.js
 
-This tool evaluates password strength using **[zxcvbn](https://github.com/dropbox/zxcvbn)** — a pattern-aware strength estimator — with a strong focus on **privacy, clarity, and auditability**.
+This tool evaluates password strength using **[zxcvbn](https://github.com/dropbox/zxcvbn)** — a pattern-aware strength estimator — with a strong focus on **privacy, clarity, and auditability**
 
 ## Features
 
@@ -25,7 +25,7 @@ Password strength is estimated using **zxcvbn**, which goes beyond simple charac
 - Recognising dates, names, repeated characters, and sequences
 - Accounting for common substitutions (e.g. `@` → `a`, `3` → `e`)
 
-This produces a **score from 0–4** and a **log₁₀ guesses** estimate that reflects real-world crackability — not just theoretical character-set size.
+This produces a **score from 0–4** and a **log₁₀ guesses** estimate that reflects real-world crackability — not just theoretical character-set size
 
 ### Entropy display
 
@@ -51,7 +51,7 @@ Crack time is derived directly from zxcvbn's guesses estimate, modelled against 
 | 3     | Strong      |
 | 4     | Very Strong |
 
-> Strength is visualised in the UI using a dynamic strength bar for faster feedback.
+> Strength is visualised in the UI using a dynamic strength bar for faster feedback
 
 ## Getting Started
 
@@ -93,9 +93,9 @@ http://localhost:3000
 - No password analysis API calls
 - Password analysis runs in the browser using zxcvbn loaded from cdnjs
 
-> This project is designed to be fully inspectable and safe to use.
+> This project is designed to be fully inspectable and safe to use
 
-> **Note for self-hosters:** All analysis runs in the browser. If you modify this to use a server-side API, enforce HTTPS — passwords must never transit the network in plaintext.
+> **Note for self-hosters:** All analysis runs in the browser. If you modify this to use a server-side API, enforce HTTPS — passwords must never transit the network in plaintext
 
 ## Disclaimer
 
@@ -104,11 +104,11 @@ This tool does **not**:
 - Check against live breach databases
 - Replace proper security practices
 
-Use it as a guideline, not a guarantee.
+Use it as a guideline, not a guarantee
 
 ## Contributing
 
-Contributions are welcome.
+Contributions are welcome
 
 If you'd like to improve this project:
 
