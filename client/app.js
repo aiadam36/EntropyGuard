@@ -46,12 +46,15 @@ input.addEventListener("input", () => {
 
   const analysis = zxcvbn(password);
   const strength = strengthLabels[analysis.score];
+  const estimatedEntropyBits = analysis.guesses_log10 * Math.log2(10);
   const feedback = [analysis.feedback.warning, ...analysis.feedback.suggestions].filter(Boolean);
 
   updateBar(strength);
 
   result.innerHTML = `
-    <p><strong>Entropy:</strong> ${analysis.guesses_log10.toFixed(2)}</p>
+    <p><strong>Entropy:</strong> ${estimatedEntropyBits.toFixed(1)} bits
+      <small>(log₁₀ guesses: ${analysis.guesses_log10.toFixed(2)})</small>
+    </p>
     <p><strong>Strength:</strong> ${strength}</p>
     <p><strong>Crack Time (Fast GPU):</strong> ${formatSeconds(analysis.crack_times_seconds.offline_fast_hashing_1e10_per_second)}</p>
     <p><strong>Crack Time (Online Attack):</strong> ${formatSeconds(analysis.crack_times_seconds.online_throttling_100_per_hour)}</p>
